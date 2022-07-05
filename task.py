@@ -96,6 +96,8 @@ def summ(file_name):
 
 
 def main():
+    file_not_found = 'Нет такого файла. Проверьте название и повторите.'
+    
     file_name = input('Введите название файла ')
     action = input('Введите комманду ')
 
@@ -107,11 +109,20 @@ def main():
         except FileNotFoundError:
             create_file(file_name, product_name, amount)
     if action == 'Edit':
-        edit(file_name, input('Название продукта '), int(input('Количество ')))
+        try:
+            edit(file_name, input('Название продукта '), int(input('Количество ')))
+        except FileNotFoundError:
+            print(file_not_found)
     if action == 'Delete':
-        delete(file_name, input('Название продукта '))
+        try:
+            delete(file_name, input('Название продукта '))
+        except FileNotFoundError:
+            print(file_not_found)
     if action == 'Summ':
-        summ(file_name)
+        try:
+            summ(file_name)
+        except FileNotFoundError:
+            print(file_not_found)
 
 
 if __name__ == '__main__':
