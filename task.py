@@ -105,7 +105,7 @@ def main():
             amount = int(input('Количество '))
             add(file_name, {product_name: amount})
         except FileNotFoundError:
-            create_file(file_name, file_name, amount)
+            create_file(file_name, product_name, amount)
     if action == 'Edit':
         edit(file_name, input('Название продукта '), int(input('Количество ')))
     if action == 'Delete':
