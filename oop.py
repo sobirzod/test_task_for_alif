@@ -1,12 +1,27 @@
 class Task:
+    """
+    Класс предназначен для добавления, редактирования, удаления и рассчета суммы
+    продуктов.
+
+    Объект класса принимает один аргумент: названия файла в формате "название.txt".
+
+    Для добавления продукта используется метод add. 
+    Для редактирования используется метод edit.
+    Для удаления продукта используется метод delete.
+    И для рассчета суммы продуктов используется метод summ.
+    """
     def __init__(self, filename) -> None:
         self.filename = filename
 
     def open_file(self):
-        with open(self.filename, 'r', encoding='utf-8') as file:
-            opened_file = file.read()
-        
+        try:
+            with open(self.filename, 'r', encoding='utf-8') as file:
+                opened_file = file.read()
+        except:
+            with open(self.filename, 'w+', encoding='utf-8') as file:
+                opened_file = file.read()
         return opened_file
+
 
     def save_file(self, new_file):
         with open(self.filename, 'w', encoding='utf-8') as file:
@@ -26,20 +41,37 @@ class Task:
         return new_items_list
     
     def add(self, new_item):
+        """
+        Принимает строку содержащую название и цену продукта через пробел.
+        Формат ввода: Название Цена
+        Пример: Яблока 200
+        """
         items = self.open_file()
         new_file = items + '\n' + new_item
         self.save_file(new_file)
     
     def edit(self, correct_item):
+        """
+        Принимает строку содержащую название и цену продукта через пробел.
+        Формат ввода: Название Цена
+        Пример: Яблока 200
+        """
         new_items_list = self.processing(correct_item)
         self.save_file('\n'.join(new_items_list))
 
 
     def delete(self, item):
+        """
+        Принимает строку содержащую название продукта.
+        Пример: Яблоко
+        """
         new_items_list = self.processing(item, delete=True)
         self.save_file('\n'.join(new_items_list))
 
     def summ(self):
+        """
+        Выводит на консоль сумму продуктов.
+        """
         items = self.open_file().split('\n')
         summ = 0
         for item in items:
@@ -49,23 +81,3 @@ class Task:
                 summ += 0
         print(summ)
 
-t = Task('test.txt')
-t.add('Apple 150')
-t.edit('Apple 300')
-# t.delete('Apple')
-t.summ()
-
-# t = Task(input('Введите названия файла: '))
-# operations = input('Выберите операцию(add, edit, delete, summ): ')
-
-# if operations == 'add':
-#     new_item = input('Введите название и цену через пробел: ')
-#     t.add(new_item)
-# elif operations == 'edit':
-#     new_item = input('Введите название и цену через пробел: ')
-#     t.edit(new_item)
-# elif operations == 'delete':
-#     new_item = input('Введите название: ')
-#     t.delete(new_item)
-# elif operations == 'summ':
-#     print(t.summ())
